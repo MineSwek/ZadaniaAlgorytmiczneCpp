@@ -1,5 +1,7 @@
 # Template for simple programing tasks
 
+# Algorytmiczne Zadania z C++ 
+
 ## How to use
 
 To add task use `add` command
