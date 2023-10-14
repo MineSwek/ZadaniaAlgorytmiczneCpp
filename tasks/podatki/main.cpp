@@ -23,8 +23,7 @@ int main() {
 
     long long n;
     std::cin >> n;
-    if(n < 2) std::cout << 1;
-    else if(n % 2 == 0 and n != 2) std::cout << 2;
+    if(n % 2 == 0 and n != 2) std::cout << 2;
     else std::cout << sumaBitow(n, 0, 0);
     
 

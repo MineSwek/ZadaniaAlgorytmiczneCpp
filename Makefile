@@ -6,10 +6,7 @@ ifndef TASK
 endif
 
 all: clear
-	@echo Compiling...
 	@g++ $(TASK_FOLDER)/$(TASK)/$(MAIN_FILE) -o $(BUILD_FOLDER)/$(TARGET_FILE) || (echo Compilation failed && type $(BUILD_FOLDER)/$(TARGET_FILE).log && exit /b 1)
-	@echo Compilation completed.
-	@echo Running...
 	@$(CURDIR)/$(BUILD_FOLDER)/$(TARGET_FILE) < $(TASK_FOLDER)/$(TASK)/$(INPUT_FILE) > $(TASK_FOLDER)/$(TASK)/$(OUTPUT_FILE)
 	@echo Execution completed.
 
