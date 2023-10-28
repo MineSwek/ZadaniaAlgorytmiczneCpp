@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 
-int tab[100005];
+int tab[105];
 
 int main() {
     std::ios_base::sync_with_stdio(false);
