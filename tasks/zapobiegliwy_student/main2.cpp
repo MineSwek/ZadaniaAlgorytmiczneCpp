@@ -117,10 +117,10 @@ int main() {
     int ostatniWyklad = 0;
     while(graniceWykladow.size() >= 1) {
         zapasowyWyklad = sprawdzPrzedzial(graniceWykladow[0].granicaOd, graniceWykladow[0].granicaDo);
-        //for(auto a: graniceWykladow) std::cout << a.indexWykladu << " " << a.granicaOd << " " << a.granicaDo << "\n";
+        for(auto a: graniceWykladow) std::cout << a.indexWykladu << " " << a.granicaOd << " " << a.granicaDo << "\n";
         
         if(zapasowyWyklad != -1) {
-            //std::cout << "znalazlo\n\n";
+            std::cout << "znalazlo\n\n";
             paryWykladow.push_back(std::pair(graniceWykladow[0].indexWykladu, zapasowyWyklad));
             wyklady[zapasowyWyklad].checked = true;
             ostatniWyklad = graniceWykladow[0].indexWykladu;
@@ -129,7 +129,7 @@ int main() {
 
         } else {
             if(graniceWykladow.size() != 1) {
-                //std::cout << "nie znalazlo\n\n";
+                std::cout << "nie znalazlo\n\n";
 
                 int i = 1;
                 while(wyklady[graniceWykladow[0].indexWykladu+i].from < wyklady[ostatniWyklad].to) {

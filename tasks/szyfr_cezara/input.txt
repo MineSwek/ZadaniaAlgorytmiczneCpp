@@ -1,0 +1,3 @@
+szyfruj
+5
+Szyfr Cezara - jest skuteczny!

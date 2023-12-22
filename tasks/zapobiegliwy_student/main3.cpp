@@ -54,16 +54,16 @@ int sprawdzPrzedzial(int granicaOd, int granicaDo) {
     }
     return -1;
 }
-void znajdzWszystkieUnikatoweWyklady(int indeksGranicyOd, int indexWykladu, int indeksGranicyDo) {
-    std::vector<graniceWykladu> graniceWykladow2;
+void znajdzWszystkieUnikatoweWyklady(int indeksGranicyOd, int indexWykladu) {
+    graniceWykladow.clear();
     int aktualnyIndexWykladu = indexWykladu;
     int indOstatniWyklad = -1;
-    for(int i = indexWykladu+1; i <= std::min(indeksGranicyDo, n); i++) {
+    for(int i = indexWykladu+1; i <= n; i++) {
         wyklady[i].checked = false;
 
         if(wyklady[i].from >= indeksGranicyOd) {
             graniceWykladu gWykladu(aktualnyIndexWykladu, 0, i);
-            graniceWykladow2.push_back(gWykladu);
+            graniceWykladow.push_back(gWykladu);
             indOstatniWyklad++;
 
             indeksGranicyOd = wyklady[i].to;
@@ -72,18 +72,13 @@ void znajdzWszystkieUnikatoweWyklady(int indeksGranicyOd, int indexWykladu, int 
             
         }
     }
-    
-    if(graniceWykladow.size() > 0) {
-        while(graniceWykladow[0].indexWykladu <= indeksGranicyDo && graniceWykladow.size() > 0) graniceWykladow.erase(graniceWykladow.begin());
-        graniceWykladow2.insert(graniceWykladow2.end(), graniceWykladow.begin(), graniceWykladow.end());
-        
-    }
-    graniceWykladow = graniceWykladow2;
-    for(int i = 1; i <= graniceWykladow.size(); i++) {
+    for(int i = 1; i < graniceWykladow.size(); i++) {
         graniceWykladow[i-1].granicaDo = graniceWykladow[i].indexWykladu;
     }
-    if(graniceWykladow.size() > 0) graniceWykladow[graniceWykladow.size()-1].granicaDo = n+1;
     
+    if(graniceWykladow.size() > 0) {
+        graniceWykladow[graniceWykladow.size()-1].granicaDo = n+1;
+    }
     
 
     
@@ -108,11 +103,11 @@ int main() {
 
     //for(auto a: wyklady) std::cout << a.from << " " << a.to << "\n";
 
-    znajdzWszystkieUnikatoweWyklady(0, 0, n);
+    znajdzWszystkieUnikatoweWyklady(0, 0);
     //for(auto a: graniceWykladow) std::cout << a.indexWykladu << " " << a.granicaOd << " " << a.granicaDo << "\n";
     //std::cout << "\n\n";
     unikatoweWyklady = graniceWykladow;
-
+    int nieznalazlocounter = 0;
     int zapasowyWyklad;
     int ostatniWyklad = 0;
     while(graniceWykladow.size() >= 1) {
@@ -130,7 +125,7 @@ int main() {
         } else {
             if(graniceWykladow.size() != 1) {
                 //std::cout << "nie znalazlo\n\n";
-
+                nieznalazlocounter++;
                 int i = 1;
                 while(wyklady[graniceWykladow[0].indexWykladu+i].from < wyklady[ostatniWyklad].to) {
                     i++;
@@ -141,7 +136,7 @@ int main() {
                 paryWykladow.push_back(std::pair(graniceWykladow[0].indexWykladu, graniceWykladow[0].indexWykladu+i));
                 
                 wyklady[graniceWykladow[0].indexWykladu+i].checked = true;
-                znajdzWszystkieUnikatoweWyklady(wyklady[graniceWykladow[0].indexWykladu+i].to, graniceWykladow[0].indexWykladu, graniceWykladow[1].granicaDo);
+                znajdzWszystkieUnikatoweWyklady(wyklady[graniceWykladow[0].indexWykladu+i].to, graniceWykladow[0].indexWykladu);
                 ostatniWyklad = graniceWykladow[0].indexWykladu;
             } else break;
             
@@ -151,6 +146,7 @@ int main() {
     koniec:
     //for(auto a: wyklady) std::cout << a.from << " " << a.to << " " << a.checked << "\n";
     //std::cout << "\n\n";
+    if(nieznalazlocounter >= 3) std::cout << "siema";
     if(unikatoweWyklady.size()-1 >= paryWykladow.size()) {
         std::cout << unikatoweWyklady.size()-1 << "\n";
         // for(int i = 0; i < unikatoweWyklady.size()-1; i++) {

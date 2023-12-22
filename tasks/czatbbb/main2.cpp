@@ -7,8 +7,7 @@ int hashujString(std::string s) {
     for(size_t i = 0; i < k; i+=kDivided) {
         hash = hash * 31 + s[i] - 97;
     }
-    return hash % 9999991;
-                  
+    return hash % 10000000;
 }
 
 struct element {
@@ -28,7 +27,7 @@ int main()
 
     std::cin >> n >> k >> a >> b >> S;
 
-    kDivided = std::max<int>(1, k/100);
+    kDivided = std::max<int>(1, int(sqrt(k)/3));
 
     for(long long iloscZnakow = 0; iloscZnakow < (n-k); iloscZnakow++) {
         R = S.substr(iloscZnakow, k);
@@ -79,21 +78,17 @@ int main()
         }
     }
 
-    std::string previousR = " ", temp, output = "";
+    std::string previousR = " ", temp;
     char nextChar;
     element* pointer;
     R = S.substr(n-k, n);
     
     for(long long iloscZnakow = n; iloscZnakow < b; iloscZnakow++) {
         if(R == previousR) {
-            if(iloscZnakow >= a-1) {
-                std::cout << std::string(b-iloscZnakow, nextChar);
-            } else {
-                std::cout << std::string(b-a+1, nextChar);
+            for (iloscZnakow = (iloscZnakow > a) ? iloscZnakow : a-1; iloscZnakow < b; iloscZnakow++) {
+                std::cout << nextChar;
             }
-            
-            return 0;
-            
+            break;
         }
         int hash = hashujString(R);
         pointer = tablica[hash];
@@ -102,7 +97,6 @@ int main()
         }
         if(pointer) nextChar = pointer->nextChar;
         else nextChar = 'a';
-
         if(iloscZnakow >= a-1) std::cout << nextChar;
         
         previousR = R;
@@ -110,5 +104,6 @@ int main()
         R.erase(R.begin());
         
     }
+
     return 0;
 }
